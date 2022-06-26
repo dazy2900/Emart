@@ -74,7 +74,7 @@ WHERE transaction.user_data = profile.email && status = 0";
 echo"<form method='POST' action=''>
 <table border='0' class='table-dark table' style='background-color:;  padding:5px; width:100%; color:; border-bottom: px solid silver; border-radius:2px; font:14px dosis;'>
      <tr style='border-bottom:;  color:;'>
-	<td style='width:5%;'>Order ID</td>
+	<td style='width:5%;'>ID</td>
 	<td style='width:14%;'>Customer Name</td>
 	<td style='width:17%;'>Contacts</td>
 	<td style='width:19%;'>Address</td>

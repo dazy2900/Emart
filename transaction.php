@@ -63,7 +63,7 @@ width:100%; border-radius:0px; position:fixed; z-index:-5;
 			</button>
 			
 </nav>
-<div class='container' style="padding-top:5em; border:px solid blue;">
+<div class='container' style="padding-top:4em; border:px solid blue;">
 <div align='center' style='font:30px ; background-color:; color:#5D84A3;'><h1>All Transactions</h1></div>
 <?php
 

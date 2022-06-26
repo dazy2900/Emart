@@ -26,13 +26,13 @@
 </head>
 <body style="" >
 <nav class="navbar navbar-expand-lg navbar-dark nav_bar" style="">
-		<a class="navbar-brand" href="#" ><img class="imgbrd" src="image/assorted.png" ></a>
+		<a class="navbar-brand" href="#" ><img class="imgbrd ml-4" style='' src="image/snklogo.png" ></a>
 	
 			
 			
  	<div align="" class="collapse justify-content-between navbar-collapse w-60 order-3 dual-collapse2 " id="navbarNav" style="width:120%;">
 		<ul></ul>
-		<ul align="center" class="navbar-nav ml-auto" style="">
+		<ul align="" class="navbar-nav ml-auto" style="">
 			<li class="nav-item" > 
 				<a class="nav-link" href ="#">Home</a>
 			</li>
@@ -183,18 +183,23 @@
 				<span style="position:relative; top:7px; border:px solid black;">CATEGORIES</span></div>
 			
 			<table style="border:1px solid silver; font:20px agency fb; width:99%; ">
-			<tr><td align="center" style="border:1px solid silver; height:80px;">
-			<form method="POST" action="" id="catf1"><input type="submit" name="sneakers" id="sneakers" style="" value="Sneakers" class="cat_input border btn"></form></td></tr>
+			<form method="POST" action="" id="catf1" class=''>
+            <tr><td align="center" style="border:1px solid silver; height:80px;">
+			<input type="submit" name="sneakers" id="sneakers" style="" value="Sneakers" class="cat_input border btn"></td></tr>
 
 			<tr><td align="center" style="border:1px solid silver; height:80px;">
-			<form method="POST" action="" id="catf2"><input style="" class=" cat_input border btn" type="submit" name="palms" id="palms" value="Palms" ></form></td></tr>
+			<input style="" class=" cat_input border btn" type="submit" name="palms" id="palms" value="Palms" ></td></tr>
 				
 
 			<tr><td align="center" style="border:1px solid silver; height:80px;">
-			<form method="POST" action="" id="catf3"><input style="" class="cat_input border btn" type="submit" name="shoes" id="shoes" value="Shoes" ></form></td></tr>
-			
+			<input style="" class="cat_input border btn" type="submit" name="shoes" id="shoes" value="Shoes" ></td></tr>
+			</form>
 			</table>
 			
+		</div>
+		<div align='center'>
+			<input type='button' id='prev' class='btn btn-sm btn-success pagination1' value=' Prev ' >			<input type='text' style='width:30px; border:none;' id='dp' class=' pagination1' value='1' > 
+			<input type='button' id='next' class='btn btn-sm btn-success pagination1' value=' Next ' > 
 		</div>
 	</div>
 	<div class="col-sm-9" style="border:px solid red;">
@@ -216,22 +221,22 @@ include'connect.php';
          } 
          $row = mysqli_fetch_array($retval, MYSQLI_NUM ); 
          $rec_count = $row[0]; 
-          
-       if( isset($_GET['page'] ) ) { 
-         
+         $rec_per_page= 9;
+         if( isset($_GET['page'] ) ) { 
+           
 			$page = $_GET['page'] + 1; 
-            $offset = 9 * $page ; 
-			
+            $offset = 9 * ($page-1) ; 
+           
          }else { 
-		 
-            $page = 0; 
+            $left_rec = $rec_count;
+            $page = 1; 
             $offset = 0;
 			
          }
-		 
-		 
+         $left_rec = $rec_count - (($page-1) * $rec_per_page);
 
-$sql = "SELECT * FROM product ORDER BY RAND() LIMIT $offset, 9 " ;
+
+$sql = "SELECT * FROM product LIMIT $offset, 9 " ;
 
 $retval= mysqli_query($conn, $sql);
 echo"<table border='0' align='center' style='width:100%;'>";
@@ -272,16 +277,17 @@ echo"</td></tr></table>";
 
 //working
 
- if( $page > 0 ) { 
-            $last = $page - 2; 
-            echo "<a href = emart_lp.php?page=$last>Prev</a> |"; 
-            echo "<a href = emart_lp.php?page=$page>Next</a>"; 
-         }else if( $page == 0 ) { 
-            echo "<a href = emart_lp.php?page=$page>Next</a>"; 
-         }else if( $left_rec < $rec_limit ) { 
-            $last = $page - 2; 
-            echo "<a href = emart_lp.php?page=$last>Last</a>"; 
-         }
+        if( $left_rec < 9 ) { 
+                    $last = $page - 2; 
+                    echo "<a href = emart_lp.php?page=$last><input type='button' value='Prev' class='btn btn-primary btn-sm'></a>"; 
+         }else if( $page == 1 ) { 
+                    echo "<a href = emart_lp.php?page=$page><input type='button' value='Next' class='btn btn-primary btn-sm'></a>"; 
+         }else if( $page > 1 ) { 
+        
+                    $last = $page - 2; 
+                    echo "<a href = emart_lp.php?page=$last><input type='button' value='Prev' class='btn btn-primary btn-sm'></a> |"; 
+                    echo "<a href = emart_lp.php?page=$page><input type='button' value='Next' class='btn btn-primary btn-sm'></a>"; 
+                 }
 
 		 
 		 
@@ -310,7 +316,9 @@ mysqli_close($conn);
 ?>	
 <div style="clear:both;"></div>
 
-<div class="message_box" name='message_box' style="margin:10px 0px;">
+<div class="message_box" name='message_box' style="margin:10px 0px; border: px solid red;">
+
+
 <?php echo $status; ?>
 </div>		
 </div>
@@ -760,6 +768,39 @@ $('#display-phone').fadeIn();
 				//alert('load');
 			});
 		});
+		$(".pagination1").click(function(){
+
+			var pagination = $(".pagination1").val();
+			var dp = $('#dp').val();
+			var pg = this.id; 
+			
+			var pages = '';
+			var page;
+		
+				
+						
+					$('#dp').val(parseInt($('#dp').val()) + 1);
+				
+
+				if(pg=='prev'){
+					$('#dp').val(parseInt($('#dp').val()) - 2);
+
+				}
+				
+				
+			
+		//	alert(dp);
+
+		//	alert(page);
+			
+			$(".display").load("pagination.php", {
+				pagination : pagination,
+				pg : pg,
+				dp : dp
+			});
+		});
+		
+
 		$("#form1").submit(function(event){
 		
 		event.preventDefault();
@@ -775,7 +816,7 @@ $('#display-phone').fadeIn();
 	});
 //working
 $(document).on('click', '.buy', function(event){
-	
+
 		event.preventDefault();
 		
 		var id = this.id;
@@ -799,17 +840,19 @@ $(document).on('click', '.buy', function(event){
 
 }); 
 
-	$("#catf1").click(function(event){
+	$(".cat_input").click(function(event){
 	
 		event.preventDefault();
-		var sneakers = $("#sneakers").val();
+		var cat_input = $('.cat_input').val();
+        var type = this.id;
 		
+
 		$(".display, .mview").load("php.php",{
-			sneakers: sneakers
-			
+            cat_input: cat_input,
+            type: type
 		});
 	});
-	$(document).on('submit','#catf2',function(event){ 
+/*	$(document).on('submit','#catf2',function(event){ 
 
 		event.preventDefault();
 		
@@ -829,7 +872,7 @@ $(document).on('click', '.buy', function(event){
 			shoes: shoes
 		})
 	});
-	
+	*/
 	$(document).scroll(function(){
 			var scroll_height =$(document).scrollTop();
 			

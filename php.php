@@ -94,8 +94,10 @@ mysqli_close($conn);
 
 
 
-if(isset($_POST['sneakers'])){
-	 
+if(isset($_POST['cat_input'])){
+$type = $_POST['type'];	 
+//$shoes = $_POST['shoes'];
+//$palms = $_POST['palms'];
 
   $sql = "SELECT count(pname) FROM product "; 
          $retval = mysqli_query( $conn, $sql ); 
@@ -120,7 +122,7 @@ if(isset($_POST['sneakers'])){
 		 
 		 
 
-$sql = "SELECT * FROM product  WHERE category = 'sneakers' ORDER BY RAND() LIMIT $offset, 9" ;
+$sql = "SELECT * FROM product  WHERE category = '$type'  LIMIT $offset, 9" ;
 
 $retval= mysqli_query( $conn, $sql);
 echo"<table border='0' align='center' style='width:100%;'>";
@@ -175,7 +177,7 @@ echo"
          }
 }
 
-if(isset($_POST['palms'])){
+/*if(isset($_POST['palms'])){
 	
   $sql = "SELECT count(pname) FROM product"; 
          $retval = mysqli_query(  $conn, $sql ); 
@@ -200,7 +202,7 @@ if(isset($_POST['palms'])){
 		 
 		 
 
-$sql = "SELECT * FROM product WHERE category = 'palms' ORDER BY RAND() LIMIT $offset, 9" ;
+$sql = "SELECT * FROM product WHERE category = 'palms'  LIMIT $offset, 9" ;
 
 $retval= mysqli_query( $conn, $sql);
 echo"<table border='0' align='center' style='width:100%;'>";
@@ -283,7 +285,7 @@ if(isset($_POST['shoes'])){
 		 
 		 
 
-$sql = "SELECT * FROM product  WHERE category = 'shoes' ORDER BY RAND() LIMIT $offset, 9" ;
+$sql = "SELECT * FROM product  WHERE category = 'shoes'  LIMIT $offset, 9" ;
 
 $retval= mysqli_query( $conn, $sql);
 echo"<table border='0' align='center' style='width:100%;'>";
@@ -341,7 +343,7 @@ if(!empty($_SESSION["emart_cart"])) {
 						 echo "<br>" .$cart_count."  items"; 
 						 }else{echo"0"; }
 }
-
+*/
 /*$status="";
 $buys = "";
 if($bu=="bu"){
