@@ -3,10 +3,10 @@ include'connect.php';
 
 //Echo"<script>alert('pagination');</script>";
 
-if(isset($_POST['pagination'])){
-$pg = $_POST['pg'];
-$page = $_POST['dp'];
-//echo"<script>alert($dp)</script>";
+if(isset($_POST['page'])){
+
+$page = $_POST['page_num'];
+//echo"<script>alert($page)</script>";
 
 $sql = "SELECT count(pname) FROM product "; 
        $retval = mysqli_query( $conn, $sql ); 
@@ -17,8 +17,8 @@ $sql = "SELECT count(pname) FROM product ";
        $rec_count = $row[0]; 
        $rec_per_page= 9;
      //  $offset = 0;
-        echo"<script>alert($page)</script>";
-       $offset = $rec_per_page * ($page) ; 
+       // echo"<script>alert($page)</script>";
+       $offset = $rec_per_page * ($page-1) ; 
       //  echo"<script>alert($offset)</script>";
        $last = $page - 2;
        $left_rec = $rec_count - (($page-1) * $rec_per_page);

@@ -26,7 +26,7 @@
 </head>
 <body style="" >
 <nav class="navbar navbar-expand-lg navbar-dark nav_bar" style="">
-		<a class="navbar-brand" href="#" ><img class="imgbrd ml-4" style='' src="image/snklogo.png" ></a>
+		<a class="navbar-brand" href="#" ><img class="imgbrd ml-4" style='height: 70px; width:180px;' src="image/snklogo2.png" ></a>
 	
 			
 			
@@ -161,21 +161,7 @@
 
 <!-- product row-->
 <div class="container bl" style=" margin-top:20px; padding-bottom:20px; ;padding-top:1px; border-radius:3px; background-color:white;">
-	<div>
-		<ul class="nav nav-tabs">
-			<li class='nav-item'>
-				<a class="nav-link active nav-fill" aria-current="page" href='#'>Active</a>
-			</li>
-			<li class='nav-item'>
-				<a class="nav-link" href='#'>Active</a>
-			</li>
-			<li class='nav-item'>
-				<a class="nav-link" href='#'>Active</a>
-			</li>
-			<li class='nav-item'>
-				<a class="nav-link" href='#'>Active</a>
-			</li>
-	</div>
+	
 <div class="row" STYLE="margin-top:40px;">
 	<div class="col-sm-3" style="border:px solid blue;">
 		<div align="center">		
@@ -197,10 +183,7 @@
 			</table>
 			
 		</div>
-		<div align='center'>
-			<input type='button' id='prev' class='btn btn-sm btn-success pagination1' value=' Prev ' >			<input type='text' style='width:30px; border:none;' id='dp' class=' pagination1' value='1' > 
-			<input type='button' id='next' class='btn btn-sm btn-success pagination1' value=' Next ' > 
-		</div>
+		
 	</div>
 	<div class="col-sm-9" style="border:px solid red;">
 		<div align="center" class="desktop">
@@ -222,6 +205,7 @@ include'connect.php';
          $row = mysqli_fetch_array($retval, MYSQLI_NUM ); 
          $rec_count = $row[0]; 
          $rec_per_page= 9;
+		 $total_page =ceil($rec_count/$rec_per_page);
          if( isset($_GET['page'] ) ) { 
            
 			$page = $_GET['page'] + 1; 
@@ -277,17 +261,7 @@ echo"</td></tr></table>";
 
 //working
 
-        if( $left_rec < 9 ) { 
-                    $last = $page - 2; 
-                    echo "<a href = emart_lp.php?page=$last><input type='button' value='Prev' class='btn btn-primary btn-sm'></a>"; 
-         }else if( $page == 1 ) { 
-                    echo "<a href = emart_lp.php?page=$page><input type='button' value='Next' class='btn btn-primary btn-sm'></a>"; 
-         }else if( $page > 1 ) { 
-        
-                    $last = $page - 2; 
-                    echo "<a href = emart_lp.php?page=$last><input type='button' value='Prev' class='btn btn-primary btn-sm'></a> |"; 
-                    echo "<a href = emart_lp.php?page=$page><input type='button' value='Next' class='btn btn-primary btn-sm'></a>"; 
-                 }
+    
 
 		 
 		 
@@ -319,10 +293,21 @@ mysqli_close($conn);
 <div class="message_box" name='message_box' style="margin:10px 0px; border: px solid red;">
 
 
-<?php echo $status; ?>
+<?php 
+echo $status; ?>
 </div>		
 </div>
-		</div>
+<div>
+<?php
+for($i =1; $i<=$total_page; $i++){
+	echo"<input type='button' class='pagination2 btn btn-sm btn-outline-primary ml-2' value='$i' id='$i'>";
+}
+?>	
+</div>
+
+
+
+	</div>
 	</div>
 </div>
 </div>
@@ -477,13 +462,13 @@ mysqli_close($conn);
 				</ul>
 			</div>
 			<br>
-				<div style="text-align:left; width:50%;"><span style="font:bold 25px agency fb;">Product & Services</span>
-					<span style="color:grey; font-family:dosis;"><br>Monitor<br>Laptop<br>Printer<br>Delivery Service</span>
+				<div style="text-align:left; width:50%;"><span style="font:bold 25px agency fb;">Products</span>
+					<span style="color:grey; font-family:dosis;"><br>Sneakers<br>Palms<br>Office Shoes</span>
 				</div>
 		</div>
 
 		<div align="center" style="padding-top:40px; " class = "col-sm-4 brder"><div align="" class="brder" style="text-align:left; width:50%;"><span style="font:bold 25px agency fb;">Contact</span><br /><span style="color:red; font:bold 20px agency fb;">Nigeria</span>
-			<br />Assortedfoods@yahoo.com
+			<br />Sneaks@yahoo.com
 			<br />
 			<br />
 			<span style="position:relative; padding-top:50; font:bold 25px agency fb; margin-top:60px;">Connect With Us:</span><br>
@@ -757,7 +742,7 @@ $('#display-phone').fadeIn();
         		});
 
 		$(".search").click(function(){
-			
+			$('.pagination2').hide();
 			var search_input = $(".search_input").val();
 			var search = $(".search").val();
 			
@@ -768,6 +753,27 @@ $('#display-phone').fadeIn();
 				//alert('load');
 			});
 		});
+		$(".pagination2").click(function(){
+			
+			var page = $(".pagination2").val();
+			var page_num = this.id;
+			//alert(page);
+			$(".display").load("pagination.php", {
+				page: page,
+				page_num: page_num				
+			}, function(response, status, xhr){
+			
+			if(status == "error"){
+				var msg = "sorry there was an error: ";
+				alert(msg);
+				
+				$("#error").html(msg + xhr.status + " " + xhr.statusText);
+			}else{
+				//alert('the load works');
+			}
+				
+		});
+		});
 		$(".pagination1").click(function(){
 
 			var pagination = $(".pagination1").val();
@@ -776,9 +782,7 @@ $('#display-phone').fadeIn();
 			
 			var pages = '';
 			var page;
-		
-				
-						
+								
 					$('#dp').val(parseInt($('#dp').val()) + 1);
 				
 
@@ -786,11 +790,7 @@ $('#display-phone').fadeIn();
 					$('#dp').val(parseInt($('#dp').val()) - 2);
 
 				}
-				
-				
-			
 		//	alert(dp);
-
 		//	alert(page);
 			
 			$(".display").load("pagination.php", {
@@ -843,6 +843,7 @@ $(document).on('click', '.buy', function(event){
 	$(".cat_input").click(function(event){
 	
 		event.preventDefault();
+		$('.pagination2').hide();
 		var cat_input = $('.cat_input').val();
         var type = this.id;
 		

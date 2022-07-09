@@ -28,7 +28,7 @@ width:100%; border-radius:0px; position:fixed; z-index:-5;
 <div align="" class=""></div>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white; color:; font:20px agency fb; font-weight:; position:fixed; width:100%;
 				  border-bottom:px solid silver; z-index:1;">
-		<a class="navbar-brand" href="#"><img STYLE="position:relative; border:px solid red; margin:-10px 5px 5px; height:2.6em; width:110%;" src="image/assorted.png" ></a>
+		<a class="navbar-brand" href="#"><img STYLE="position:relative; border:px solid red; margin:-10px 30px 0px 20px; height:60px; width:170px;" src="image/snklogo1.png" ></a>
 	
 			
 			

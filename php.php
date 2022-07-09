@@ -99,7 +99,7 @@ $type = $_POST['type'];
 //$shoes = $_POST['shoes'];
 //$palms = $_POST['palms'];
 
-  $sql = "SELECT count(pname) FROM product "; 
+  $sql = "SELECT count(*) FROM product WHERE category = '$type'"; 
          $retval = mysqli_query( $conn, $sql ); 
           
          if(! $retval ) { 
@@ -107,22 +107,16 @@ $type = $_POST['type'];
          } 
          $row = mysqli_fetch_array($retval, MYSQLI_NUM ); 
          $rec_count = $row[0]; 
-          
-       if( isset($_GET['page'] ) ) { 
-         
-			$page = $_GET['page'] + 1; 
-            $offset = 9 * $page ; 
-			
-         }else { 
-		 
-            $page = 0; 
-            $offset = 0;
-			
-         }
+		 $rec_per_page= 9;
+		 $total_page =ceil($rec_count/$rec_per_page);
+         $offset = 0;
+	//	 echo"<script>alert($total_page)</script>";
+
+      
 		 
 		 
 
-$sql = "SELECT * FROM product  WHERE category = '$type'  LIMIT $offset, 9" ;
+$sql = "SELECT * FROM product  WHERE category = '$type'" ;
 
 $retval= mysqli_query( $conn, $sql);
 echo"<table border='0' align='center' style='width:100%;'>";
@@ -165,16 +159,7 @@ echo"
 </div>
 </td></tr></table>";
 
- if( $page > 0 ) { 
-            $last = $page - 2; 
-            echo "<a href = emart_lp.php?page=$last>Prev</a> |"; 
-            echo "<a href = emart_lp.php?page=$page>Next</a>"; 
-         }else if( $page == 0 ) { 
-            echo "<a href = emart_lp.php?page=$page>Next</a>"; 
-         }else if( $left_rec < $rec_limit ) { 
-            $last = $page - 2; 
-            echo "<a href = emart_lp.php?page=$last>Last</a>"; 
-         }
+
 }
 
 /*if(isset($_POST['palms'])){
